@@ -49,8 +49,9 @@ def counter(image):
 def image_callback(msg):
     try:
         cv_image = bridge.imgmsg_to_cv2(msg, "bgr8")  # Convert ROS Image message to OpenCV format
-        cv2.imshow("Microscope Image", cv_image)
-        cv2.waitKey(1)
+        count = counter(cv_image)
+        # cv2.imshow("Microscope Image", cv_image)
+        # cv2.waitKey(1)
     except Exception as e:
         print(e)
 
@@ -73,24 +74,24 @@ def loadImages(input_path):
 
 
 if __name__ == "__main__":
-    # rospy.init_node("image_subscriber")  # Initialize ROS node
-    # bridge = CvBridge()  # Initialize CvBridge to convert between ROS Image messages and OpenCV images
+
+    rospy.init_node("image_subscriber")  # Initialize ROS node
+    bridge = CvBridge()  # Initialize CvBridge to convert between ROS Image messages and OpenCV images
     
-    # # Subscribe to the image topic
-    # image_topic = "/floter/microscope"  # Modify this to match your actual topic name
-    # rospy.Subscriber(image_topic, Image, image_callback)
+    # Subscribe to the image topic
+    image_topic = "/floter/microscope"  # Modify this to match your actual topic name
+    rospy.Subscriber(image_topic, Image, image_callback)
     
-    # rospy.spin()  # Keep the node running until it's manually stopped
-    # cv2.destroyAllWindows()  # Close OpenCV windows when the node is stopped
+    rospy.spin()  # Keep the node running until it's manually stopped
 
 
 ############################################################################################################
 
-    path = "./grouped" + "/_image_004.png"
-    # path = "./dataset/other_planktons/single"
+    # path = "./grouped" + "/_image_004.png"
+    # # path = "./dataset/other_planktons/single"
 
-    images = loadImages(path)
+    # images = loadImages(path)
 
-    for image in images:
-        count = counter(image)
-        # print(count)
+    # for image in images:
+    #     count = counter(image)
+    #     # print(count)
